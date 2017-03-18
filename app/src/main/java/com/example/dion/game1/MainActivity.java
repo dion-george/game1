@@ -10,6 +10,7 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -155,7 +156,9 @@ public class MainActivity extends AppCompatActivity {
                 no_of_times++;
 
                if(no_of_times<100) {
-                    handler.postDelayed(this,1000);
+                   orange.setVisibility(View.VISIBLE);
+                    handler.postDelayed(this,3000);
+                   touched();
                }
             }
         };
@@ -163,6 +166,26 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(runnable,1000);
     }
 
+    public void touched(){
+        orange.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams) orange.getLayoutParams();
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        orange.setVisibility(View.INVISIBLE);
+                        score = score + 10;
+                        scoreLabel.setText("Score : " + score);
+                        break;
+
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+    }
 
 
 }
