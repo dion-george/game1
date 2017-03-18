@@ -49,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
     //speed
     private int orangeSpeed;
 
+
     private int score=0;
+    private int no_of_times=0;
+
 
     // Initialize Class
 
@@ -132,38 +135,34 @@ public class MainActivity extends AppCompatActivity {
             //boxSize = box.getHeight();
 
 
-
-
-
             startLabel.setVisibility(View.GONE);
-            changePos();
+
+            playgame();
 
         }
-//
-        if (me.getAction() == MotionEvent.ACTION_DOWN) {
 
-            x=(int)me.getX();
-            y=(int)me.getY();
-//                    if (x >= orangeX && x < (orangeX + orange.getWidth())
-//                            && y >= orangeY && y < (orangeY + orange.getHeight())) {
-
-            score += 10;
-            scoreLabel.setText("Score:" + score);
-            changePos();
-            //}
-//                    timer.schedule(new TimerTask() {
-//                        @Override
-//                        public void run() {
-//                            handler.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-            // changePos();
-//                                }
-//                            });
-//                        }
-//                    }, 0, 1000);
-        }
         //        }
         return true;
     }
+
+
+
+    public void playgame(){
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                changePos();
+                no_of_times++;
+
+               if(no_of_times<100) {
+                    handler.postDelayed(this,1000);
+               }
+            }
+        };
+
+        handler.postDelayed(runnable,1000);
+    }
+
+
+
 }
