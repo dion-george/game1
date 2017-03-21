@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,15 +10,28 @@
         android:id="@+id/scoreLabel"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Score : 300"
+        android:text="Score : 0"
         android:textSize="18sp"
         android:paddingLeft="10dp"
         android:gravity="center_vertical"/>
 
+    <TextView
+        android:id="@+id/life"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="life: 3"
+        android:paddingLeft="120dp"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+         />
+
+    />
+
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/scoreLabel">
 
         <TextView
             android:id="@+id/startLabel"
@@ -49,4 +62,4 @@
 
     </FrameLayout>
 
-</LinearLayout>
+</RelativeLayout>

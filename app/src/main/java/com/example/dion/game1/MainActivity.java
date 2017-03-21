@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView scoreLabel;
     private TextView startLabel;
+    private TextView life;
     //private ImageView box;
     private ImageView orange;
     private ImageView pink;
@@ -47,13 +48,12 @@ public class MainActivity extends AppCompatActivity {
     private int blackY;
     private float x;
     private float y;
-    //speed
-    private int orangeSpeed;
 
 
     private int score=0;
     private int no_of_times=0;
-
+    private int check_touch=0;
+    private int count_life = 3;
 
     // Initialize Class
 
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         scoreLabel = (TextView) findViewById(R.id.scoreLabel);
         startLabel = (TextView) findViewById(R.id.startLabel);
-        //box = (ImageView) findViewById(R.id.box);
+        life = (TextView) findViewById(R.id.life);
         orange = (ImageView) findViewById(R.id.orange);
         pink = (ImageView) findViewById(R.id.pink);
         black = (ImageView) findViewById(R.id.black);
@@ -85,9 +85,6 @@ public class MainActivity extends AppCompatActivity {
         screenHeight = size.y;
 
 
-        orangeSpeed = Math.round(screenWidth / 60); // 768 / 60 = 12.8 => 13
-
-
         // Move to out of screen.
         orange.setX(-80);
         orange.setY(-80);
@@ -97,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
         black.setY(-80);
 
         scoreLabel.setText("Score:0");
-        //boxY = 500;
 
+        life.setText("life: 3");
 
 
 
@@ -138,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
             startLabel.setVisibility(View.GONE);
 
-            playgame();
+            playGame();
 
         }
 
@@ -148,17 +145,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void playgame(){
+    public void playGame(){
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                changePos();
                 no_of_times++;
 
                if(no_of_times<100) {
+                   changePos();
                    orange.setVisibility(View.VISIBLE);
-                    handler.postDelayed(this,3000);
+                    handler.postDelayed(this, 3000);
                    touched();
+
                }
             }
         };
@@ -171,20 +169,29 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ViewGroup.LayoutParams layoutParams = (ViewGroup.LayoutParams) orange.getLayoutParams();
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
+
+                if (event.getAction()==MotionEvent.ACTION_DOWN) {
                         orange.setVisibility(View.INVISIBLE);
+
                         score = score + 10;
                         scoreLabel.setText("Score : " + score);
-                        break;
 
-                    default:
-                        break;
                 }
+                else{
+                    if(orange.getVisibility()== View.VISIBLE) {
+                        count_life = count_life - 1;
+                        life.setText("Life: " + count_life);
+                        if (count_life < 0) {
+                            scoreLabel.setText("Score : " + score + " over!");
+                        }
+                    }
+                }
+
+
                 return true;
             }
         });
+
     }
 
 
